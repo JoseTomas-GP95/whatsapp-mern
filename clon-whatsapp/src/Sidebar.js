@@ -35,9 +35,25 @@ function Sidebar() {
 
       <div className="sidebar__chats">
         <SidebarChat />
+        <SidebarChat />
+        <SidebarChat />
+        <SidebarChat />
+        <SidebarChat />
+        <SidebarChat />
+        <SidebarChat />
+        <SidebarChat />
       </div>
     </div>
   );
 }
 
 export default Sidebar;
+
+// Me quede en una hora: 
+// https://www.youtube.com/watch?v=pUxrDcITyjg
+
+// Firebase
+// https://console.firebase.google.com/project/whats-app-clone-76341/settings/general/web:MmM1ZThjN2YtYWY4OS00YWEwLTk4YzgtMjRiYjU0M2U3MDlk?hl=es
+
+// Clever Programmer VIM
+// https://github.com/CleverProgrammer/vim-instant-markdown
