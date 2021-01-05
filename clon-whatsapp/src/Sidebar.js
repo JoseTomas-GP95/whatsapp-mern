@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SidebarChat from "./SidebarChat";
 import "./Sidebar.css";
 
@@ -7,12 +7,29 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { SearchOutlined } from "@material-ui/icons";
+import db from "./firebase";
 
 function Sidebar() {
+  const [rooms, setRooms] = useState([]);
+  // repasar esta parte
+  useEffect(() => {
+    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
+      setRooms(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      )
+    );
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar src = "https://avatars.dicebear.com/api/avataaars/e.svg"/>
+        <Avatar src="https://avatars.dicebear.com/api/avataaars/e.svg" />
         <div className="sidebar__headerRight">
           <IconButton>
             <DonutLargeIcon />
@@ -29,19 +46,15 @@ function Sidebar() {
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
           <SearchOutlined />
-          <input placeholder="Busca o Inicia un Chat   📩" />
+          <input placeholder="Busca o Inicia un Chat" />
         </div>
       </div>
 
       <div className="sidebar__chats">
         <SidebarChat addNewChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
+        {rooms.map((room) => (
+          <SidebarChat key={room.id} id={room.id} name={room.data.name} />
+        ))}
       </div>
     </div>
   );
@@ -49,7 +62,7 @@ function Sidebar() {
 
 export default Sidebar;
 
-// Me quede en una hora: 
+// Me quede en: 2:31:09
 // https://www.youtube.com/watch?v=pUxrDcITyjg
 
 // Firebase
